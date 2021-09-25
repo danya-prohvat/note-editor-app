@@ -1,5 +1,6 @@
 $note-background-color: transparent;
 $note-border-color: #9d9a9a;
+$activeNote-border-color: #3b3b3b;
 
 .note {
   width: 100%;
@@ -17,5 +18,10 @@ $note-border-color: #9d9a9a;
 
   &__date {
     font-size: 12px;
+  }
+
+  &_active{
+    border: 1px solid $activeNote-border-color;
+
   }
 }

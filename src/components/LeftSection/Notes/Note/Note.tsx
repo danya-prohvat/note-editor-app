@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from "./Note.module.scss";
 import classNames from 'classnames';
-import {INote} from "../../../../types/Types";
+import {INoteProps} from "../../../../types/Types";
 
 
-const Note: React.FC<INote> = ({title, date}) => {
+const Note: React.FC<INoteProps> = ({title, date, active}) => {
+
     function getDateInString(propsDate: number): string {
         let date = new Date(propsDate);
         let day = date.getDate();
@@ -13,7 +14,7 @@ const Note: React.FC<INote> = ({title, date}) => {
         return `${day < 10 ? '0' + day : day}:${month < 10 ? '0' + month : month}:${year}`;
     }
 
-    return (<div className={classNames(styles.note)}>
+    return (<div className={classNames(styles.note, {[styles.note_active]:active})}>
         <span className={classNames(styles.note__title)}>{title}</span>
         <span className={classNames(styles.note__date)}>{getDateInString(date)}</span>
     </div>);
