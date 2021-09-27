@@ -3,9 +3,11 @@ import {IInitialState, INoteEditorData} from "../types/Types";
 
 const initialState: IInitialState = {
     notes: [
-        {title: 'fasdfasd sdfsdf gfshs', description: 'fsdfsd', date: 1631594835610, id: 1},
-        {title: 'rrrrrrrrrrr ttttttttttt', description: 'fsdfsdtgdfgdf', date: 1631594844785, id: 2},
-        {title: 'Dannilll hjghj', description: 'fsdfsd mmn', date: 1631594850954, id: 3},
+        {title: 'aaaa', description: 'aaaa', date: 1631595835610, id: 1},
+        {title: 'aca', description: 'aca', date: 1631994850954, id: 2},
+        {title: 'ab', description: 'ab', date: 1631194441785, id: 3},
+        {title: 'Dannil', description: 'Dannil', date: 1621594850954, id: 4},
+        {title: 'js / react / css', description: 'js / react / css', date: 1671594850954, id: 5},
     ],
     creatingNewNoteNow: false,
     activeNoteId: 1,
@@ -27,7 +29,16 @@ const mainSlice = createSlice({
             })
         },
         createNewNote(state, action: PayloadAction<INoteEditorData>) {
-            let id = state.notes.length > 0 ? state.notes[state.notes.length - 1].id + 1 : 1
+            let id: number = 1;
+            state.notes.forEach(note => {
+                id = Math.max(id, note.id)
+            })
+            if (state.notes.length > 0) {
+                state.notes.forEach(note => {
+                    id = Math.max(id, note.id)
+                })
+                id++;
+            }
             state.notes.push({
                 id: id,
                 title: action.payload.title,
@@ -35,7 +46,7 @@ const mainSlice = createSlice({
                 date: Date.now()
             })
             state.creatingNewNoteNow = false
-            state.activeNoteId = state.notes[state.notes.length-1].id
+            state.activeNoteId = state.notes[state.notes.length - 1].id
         },
         deleteNote(state) {
             state.notes = state.notes.filter(note => note.id !== state.activeNoteId)
@@ -50,9 +61,28 @@ const mainSlice = createSlice({
             state.creatingNewNoteNow = true
             state.activeNoteId = null
         },
+        sortNotes(state, action: PayloadAction<string>) {
+            if (action.payload === 'title') {
+                state.notes = state.notes.sort((firstEl, secondEl) => {
+                    if (firstEl.title.toLowerCase() < secondEl.title.toLowerCase()) return -1;
+                    if (firstEl.title.toLowerCase() > secondEl.title.toLowerCase()) return 1;
+                    return 0;
+                })
+
+            } else if (action.payload === 'date') {
+                state.notes = state.notes.sort((firstEl, secondEl) => secondEl.date - firstEl.date)
+            }
+        },
     },
 })
 
 
-export const {setActiveNote, editNote, createNewNote, deleteNote, toggleNoteEditorToCreating} = mainSlice.actions
+export const {
+    setActiveNote,
+    editNote,
+    createNewNote,
+    deleteNote,
+    toggleNoteEditorToCreating,
+    sortNotes
+} = mainSlice.actions
 export default mainSlice.reducer

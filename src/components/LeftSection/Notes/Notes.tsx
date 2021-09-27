@@ -20,9 +20,11 @@ const Notes: React.FC = () => {
     return (<div className={classNames(styles.notes)}>
         <button onClick={newButtonOnClick} className={classNames(styles.notes__newButton)}>+ New</button>
 
-        {notes.map(note => <Note key={note.id} noteOnClick={noteOnClick} id={note.id} title={note.title}
-                                 date={note.date}
-                                 active={activeNoteId === note.id}/>)}
+        {notes.length > 0 ?
+            notes.map(note => <Note key={note.id} noteOnClick={noteOnClick} id={note.id} title={note.title}
+                                    date={note.date}
+                                    active={activeNoteId === note.id}/>) :
+            <span>Empty list of notes</span>}
     </div>);
 }
 

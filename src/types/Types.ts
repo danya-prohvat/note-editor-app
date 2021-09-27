@@ -1,7 +1,7 @@
 export interface IInitialState {
     notes: INote[],
     activeNoteId: number | null,
-    creatingNewNoteNow:boolean
+    creatingNewNoteNow: boolean,
 }
 
 export interface INote {
@@ -23,5 +23,5 @@ export interface INoteEditorData {
 }
 
 export interface INewNote extends INoteEditorData {
-    editingNow:boolean
+    editingNow: boolean
 }
